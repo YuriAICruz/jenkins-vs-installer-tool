@@ -1,0 +1,21 @@
+jenkins:
+  nodes:
+    - permanent:
+        name: "Windows-Agent"
+        remoteFS: "C:\\jenkins"
+        labels: "windows"
+        launcher:
+          windows:
+            jnlp:
+              credentialsId: "windows-agent-credentials-id"
+            jvmOptions: "-Xmx2g"
+            javaPath: "C:\\Program Files\\Java\\jdk1.8.0_221\\bin\\java.exe"
+            tunnel: "http://devops.kokkugames.com:50000"
+        retentionStrategy: "always"
+        nodeProperties:
+          - hudson.slaves.EnvironmentVariablesNodeProperty:
+              env:
+                - key: "PATH"
+                  value: "C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\bin;%PATH%"
+                - key: "VS100COMNTOOLS"
+                  value: "C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\
