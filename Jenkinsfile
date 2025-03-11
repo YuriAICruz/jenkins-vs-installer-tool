@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     // Run PowerShell script to install Visual Studio 2008
-                    def installScript = """
+                    def installScript = '''
                     if (-Not (Test-Path ${INSTALLER_PATH})) {
                         Write-Host "ERROR: Visual Studio 2008 installer not found."
                         exit 1
@@ -21,15 +21,15 @@ pipeline {
                     Write-Host "Starting Visual Studio 2008 installation..."
                     Start-Process -FilePath ${INSTALLER_PATH} -ArgumentList $installArgs -NoNewWindow -Wait
 
-                    if (\$?) {  // Escape $?
+                    if ($?) {  // Check if the installation was successful
                         Write-Host "Visual Studio 2008 installed successfully."
                     } else {
                         Write-Host "ERROR: Visual Studio 2008 installation failed. Check the log."
                         exit 1
                     }
-                    """
+                    '''
                     // Execute the script on the Windows agent
-                    bat """powershell -Command ${installScript}"""
+                    bat "powershell -Command ${installScript}"
                 }
             }
         }
