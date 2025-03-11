@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'windows'  // Ensures the job runs on the Windows agent
-    }
+    agent any  // Use any available agent to run the pipeline
 
     environment {
         INSTALLER_PATH = "C:\\Path\\To\\VS2008\\setup.exe"  // Path to the VS2008 installer
@@ -23,7 +21,7 @@ pipeline {
                     Write-Host "Starting Visual Studio 2008 installation..."
                     Start-Process -FilePath ${INSTALLER_PATH} -ArgumentList $installArgs -NoNewWindow -Wait
 
-                    if ($?) {
+                    if (\$?) {  // Escape $?
                         Write-Host "Visual Studio 2008 installed successfully."
                     } else {
                         Write-Host "ERROR: Visual Studio 2008 installation failed. Check the log."
@@ -47,8 +45,8 @@ pipeline {
 
     post {
         always {
-            // Clean up or notify about build status
-            echo 'Cleaning up after the build'
+            // Clean-up or notifications
+            echo 'Pipeline completed.'
         }
     }
 }
