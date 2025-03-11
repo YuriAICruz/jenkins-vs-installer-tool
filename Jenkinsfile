@@ -1,5 +1,7 @@
 pipeline {
-    agent any  // Use any available agent to run the pipeline
+    agent {
+        label 'windows'  // Ensures the job runs on the Windows agent
+    }
 
     environment {
         INSTALLER_PATH = "C:\\Path\\To\\VS2008\\setup.exe"  // Path to the VS2008 installer
